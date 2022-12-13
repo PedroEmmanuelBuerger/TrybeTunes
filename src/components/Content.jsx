@@ -33,23 +33,19 @@ class Content extends Component {
 
   Disabled = (e) => {
     const valor = e.target.value;
-    const { nome } = this.state;
-    const name = nome;
-    if (nome === name) {
-      const numero = 3;
-      if (valor.length >= numero) {
-        this.setState(({
-          isDisabled: false,
-        }));
-      } else {
-        this.setState(({
-          isDisabled: true,
-        }));
-      }
+    const numero = 3;
+    if (valor.length >= numero) {
       this.setState(({
-        nome: valor,
+        isDisabled: false,
+      }));
+    } else {
+      this.setState(({
+        isDisabled: true,
       }));
     }
+    this.setState(({
+      nome: valor,
+    }));
   };
 
   render() {
