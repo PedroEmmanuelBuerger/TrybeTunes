@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import FormsSearch from '../components/FormsSearch';
+import Loading from '../components/Loading';
+import AlbumList from '../components/AlbumList';
 
 class Search extends Component {
   render() {
-    const { isDisabled, Disabled } = this.props;
-    const number = 2;
+    const { isDisabled, Disabled, nameArtist, artist,
+      searchArtist, Loadings, finishedSearch, albuns, artistSearch } = this.props;
     return (
       <div data-testid="page-search">
         <Header />
-        <label htmlFor="search">
-          <input
-            type="text"
-            data-testid="search-artist-input"
-            placeholder="artistas"
-            onChange={ (e) => Disabled(e, number) }
-          />
-        </label>
-        <button
-          data-testid="search-artist-button"
-          type="submit"
-          disabled={ isDisabled }
-        >
-          Pesquisar
-        </button>
+        {!Loadings ? <FormsSearch
+          isDisabled={ isDisabled }
+          Disabled={ Disabled }
+          nameArtist={ nameArtist }
+          artist={ artist }
+          searchArtist={ searchArtist }
+        />
+          : <Loading /> }
+        {finishedSearch ? <AlbumList artist={ artistSearch } albuns={ albuns } /> : ''}
       </div>
     );
   }
@@ -32,6 +29,15 @@ class Search extends Component {
 Search.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   Disabled: PropTypes.func.isRequired,
+  nameArtist: PropTypes.func.isRequired,
+  artist: PropTypes.string.isRequired,
+  searchArtist: PropTypes.func.isRequired,
+  Loadings: PropTypes.bool.isRequired,
+  finishedSearch: PropTypes.bool.isRequired,
+  albuns: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
+  artistSearch: PropTypes.string.isRequired,
 };
 
 export default Search;

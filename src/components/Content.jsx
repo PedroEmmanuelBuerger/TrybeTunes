@@ -8,6 +8,7 @@ import Profile from '../pages/Profile';
 import ProfileEdit from '../pages/ProfileEdit';
 import Search from '../pages/Search';
 import { createUser } from '../services/userAPI';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
 class Content extends Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class Content extends Component {
       nome: 'Name',
       Loadings: false,
       redirect: false,
+      artist: '',
+      albuns: [],
+      finishedSearch: false,
+      artistSearch: '',
     };
   }
 
@@ -32,6 +37,7 @@ class Content extends Component {
   };
 
   Disabled = (e, numero) => {
+    const { id } = e.target;
     const valor = e.target.value;
     if (valor.length >= numero) {
       this.setState(({
@@ -41,6 +47,9 @@ class Content extends Component {
       this.setState(({
         isDisabled: true,
       }));
+    }
+    if (id === 'artist') {
+      return;
     }
     this.setState(({
       nome: valor,
@@ -53,8 +62,34 @@ class Content extends Component {
     }));
   };
 
+  nameArtist = (e) => {
+    const valor = e.target.value;
+    this.setState(({
+      artist: valor,
+    }));
+  };
+
+  searchArtist = async () => {
+    const { artist } = this.state;
+    this.setState(({
+      Loadings: true,
+      finishedSearch: false,
+    }));
+    const album = await searchAlbumsAPI(artist);
+    this.setState(({
+      albuns: [album],
+    }));
+    this.setState(({
+      Loadings: false,
+      finishedSearch: true,
+      artistSearch: artist,
+      artist: '',
+    }));
+  };
+
   render() {
-    const { isDisabled, nome, Loadings, redirect } = this.state;
+    const { isDisabled, nome, Loadings, redirect,
+      artist, finishedSearch, albuns, artistSearch } = this.state;
     return (
       <main>
         <Switch>
@@ -64,6 +99,13 @@ class Content extends Component {
               { ...props }
               isDisabled={ isDisabled }
               Disabled={ this.Disabled }
+              nameArtist={ this.nameArtist }
+              artist={ artist }
+              searchArtist={ this.searchArtist }
+              Loadings={ Loadings }
+              finishedSearch={ finishedSearch }
+              albuns={ albuns }
+              artistSearch={ artistSearch }
             />) }
           />
           <Route path="/album/:id" component={ Album } />
