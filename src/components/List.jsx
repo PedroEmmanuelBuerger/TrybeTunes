@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 class List extends Component {
   render() {
     const { obj } = this.props;
+    const url = `/album/${obj.collectionId}`;
     return (
       <div>
         <Link
           data-testid={ `link-to-album-${obj.collectionId}` }
-          to="/album/${obj.collectionId}"
+          to={ url }
         >
           <h2>
             Album:
