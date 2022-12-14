@@ -26,7 +26,7 @@ class Header extends Component {
         </span>
         <section>
           <Link to="/search" data-testid="link-to-search"> Pesquisa </Link>
-          <Link to="/favorites" data-testid="link-to-favorites"> Musicas Favoritas </Link>
+          <Link to="/favorites" data-testid="link-to-favorites"> favoritas </Link>
           <Link to="/profile" data-testid="link-to-profile"> Perfil </Link>
         </section>
       </header>

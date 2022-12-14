@@ -31,9 +31,8 @@ class Content extends Component {
     }));
   };
 
-  Disabled = (e) => {
+  Disabled = (e, numero) => {
     const valor = e.target.value;
-    const numero = 3;
     if (valor.length >= numero) {
       this.setState(({
         isDisabled: false,
@@ -48,12 +47,25 @@ class Content extends Component {
     }));
   };
 
+  resetDisabled = () => {
+    this.setState(({
+      isDisabled: true,
+    }));
+  };
+
   render() {
     const { isDisabled, nome, Loadings, redirect } = this.state;
     return (
       <main>
         <Switch>
-          <Route path="/search" component={ Search } />
+          <Route
+            path="/search"
+            render={ (props) => (<Search
+              { ...props }
+              isDisabled={ isDisabled }
+              Disabled={ this.Disabled }
+            />) }
+          />
           <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
           <Route path="/profile/edit" component={ ProfileEdit } />
@@ -68,6 +80,7 @@ class Content extends Component {
               nome={ nome }
               createUsers={ this.createUsers }
               Loadings={ Loadings }
+              resetDisabled={ this.resetDisabled }
             /> }
           </Route>
           <Route path="*" component={ NotFound } />

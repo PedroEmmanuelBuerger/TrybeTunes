@@ -4,7 +4,9 @@ import Loading from '../components/Loading';
 
 class Login extends Component {
   render() {
-    const { isDisabled, Disabled, nome, createUsers, Loadings } = this.props;
+    const { isDisabled, Disabled, nome, createUsers,
+      Loadings, resetDisabled } = this.props;
+    const number = 3;
     return (
       <div data-testid="page-login">
         <label htmlFor="name">
@@ -12,14 +14,17 @@ class Login extends Component {
             type="text"
             id="name"
             data-testid="login-name-input"
-            onChange={ Disabled }
+            onChange={ (e) => Disabled(e, number) }
           />
         </label>
         <button
           type="submit"
           data-testid="login-submit-button"
           disabled={ isDisabled }
-          onClick={ () => createUsers({ name: nome }) }
+          onClick={ () => {
+            createUsers({ name: nome });
+            resetDisabled();
+          } }
         >
           Entrar
         </button>
@@ -35,5 +40,6 @@ Login.propTypes = {
   nome: PropTypes.string.isRequired,
   createUsers: PropTypes.func.isRequired,
   Loadings: PropTypes.bool.isRequired,
+  resetDisabled: PropTypes.func.isRequired,
 };
 export default Login;
