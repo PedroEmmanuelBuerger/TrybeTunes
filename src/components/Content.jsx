@@ -9,6 +9,7 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Search from '../pages/Search';
 import { createUser } from '../services/userAPI';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import { addSong } from '../services/favoriteSongsAPI';
 
 class Content extends Component {
   constructor(props) {
@@ -87,6 +88,16 @@ class Content extends Component {
     }));
   };
 
+  saveFavoritesMusics = async (e, music) => {
+    this.setState(({
+      Loadings: true,
+    }));
+    await addSong(music);
+    this.setState(({
+      Loadings: false,
+    }));
+  };
+
   render() {
     const { isDisabled, nome, Loadings, redirect,
       artist, finishedSearch, albuns, artistSearch } = this.state;
@@ -108,7 +119,14 @@ class Content extends Component {
               artistSearch={ artistSearch }
             />) }
           />
-          <Route path="/album/:id" render={ (props) => (<Album { ...props } />) } />
+          <Route
+            path="/album/:id"
+            render={ (props) => (<Album
+              { ...props }
+              saveFavoritesMusics={ this.saveFavoritesMusics }
+              Loadings={ Loadings }
+            />) }
+          />
           <Route path="/favorites" component={ Favorites } />
           <Route path="/profile/edit" component={ ProfileEdit } />
           <Route path="/profile" component={ Profile } />

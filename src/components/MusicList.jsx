@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class MusicCard extends Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
+class MusicList extends Component {
   render() {
     const { music, saveFavoritesMusics } = this.props;
     return (
@@ -31,10 +25,11 @@ class MusicCard extends Component {
   }
 }
 
-MusicCard.propTypes = {
+MusicList.propTypes = {
   music: PropTypes.oneOfType([
     PropTypes.object,
   ]).isRequired,
   saveFavoritesMusics: PropTypes.func.isRequired,
 };
-export default MusicCard;
+
+export default MusicList;
