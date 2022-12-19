@@ -28,7 +28,7 @@ class Album extends Component {
 
   render() {
     const { nameArstist, NameALbum, listAlbum } = this.state;
-    const { saveFavoritesMusics, Loadings } = this.props;
+    const { saveFavoritesMusics, Loadings, list } = this.props;
     return (
       <div data-testid="page-album">
         <Header />
@@ -41,6 +41,7 @@ class Album extends Component {
             music={ element }
             key={ index }
             loadings={ Loadings }
+            lists={ list }
           />))}
       </div>
     );
@@ -53,6 +54,9 @@ Album.propTypes = {
   ]).isRequired,
   saveFavoritesMusics: PropTypes.func.isRequired,
   Loadings: PropTypes.bool.isRequired,
+  list: PropTypes.PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
 };
 
 export default Album;

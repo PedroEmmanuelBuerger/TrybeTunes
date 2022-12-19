@@ -1,24 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class MusicCard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      favoritesMusics: [],
-    };
-  }
-
   render() {
-    const { music, saveFavoritesMusics } = this.props;
-    const { favoritesMusics } = this.state;
-    const bool = favoritesMusics.some((element) => element.trackId === music.trackId);
-    getFavoriteSongs().then((data) => {
-      this.setState(() => ({
-        favoritesMusics: data,
-      }));
-    });
+    const { music, saveFavoritesMusics, lists } = this.props;
+    const bool = lists.some((par) => par.trackId === music.trackId);
     return (
       <div>
         <h3>{ music.trackName }</h3>
@@ -31,9 +17,9 @@ class MusicCard extends Component {
           Favorita
           <input
             type="checkbox"
-            checked={ bool }
             data-testid={ `checkbox-music-${music.trackId}` }
             onChange={ (e) => saveFavoritesMusics(e, music) }
+            checked={ bool }
           />
         </label>
       </div>
@@ -46,5 +32,8 @@ MusicCard.propTypes = {
     PropTypes.object,
   ]).isRequired,
   saveFavoritesMusics: PropTypes.func.isRequired,
+  lists: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
 };
 export default MusicCard;

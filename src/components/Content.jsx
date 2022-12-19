@@ -9,7 +9,7 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Search from '../pages/Search';
 import { createUser } from '../services/userAPI';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Content extends Component {
   constructor(props) {
@@ -23,8 +23,16 @@ class Content extends Component {
       albuns: [],
       finishedSearch: false,
       artistSearch: '',
+      list: [],
     };
   }
+
+  createList = async () => {
+    const lists = await getFavoriteSongs();
+    this.setState(() => ({
+      list: lists,
+    }));
+  };
 
   createUsers = async (par) => {
     this.setState(({
@@ -89,6 +97,7 @@ class Content extends Component {
   };
 
   saveFavoritesMusics = async (e, music) => {
+    e.target.checked = true;
     this.setState(({
       Loadings: true,
     }));
@@ -100,7 +109,8 @@ class Content extends Component {
 
   render() {
     const { isDisabled, nome, Loadings, redirect,
-      artist, finishedSearch, albuns, artistSearch } = this.state;
+      artist, finishedSearch, albuns, artistSearch, list } = this.state;
+    this.createList();
     return (
       <main>
         <Switch>
@@ -125,6 +135,8 @@ class Content extends Component {
               { ...props }
               saveFavoritesMusics={ this.saveFavoritesMusics }
               Loadings={ Loadings }
+              createList={ this.createList }
+              list={ list }
             />) }
           />
           <Route path="/favorites" component={ Favorites } />
