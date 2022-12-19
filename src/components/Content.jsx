@@ -9,7 +9,7 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Search from '../pages/Search';
 import { createUser } from '../services/userAPI';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 class Content extends Component {
   constructor(props) {
@@ -97,14 +97,26 @@ class Content extends Component {
   };
 
   saveFavoritesMusics = async (e, music) => {
+    const { list } = this.state;
     e.target.checked = true;
-    this.setState(({
-      Loadings: true,
-    }));
-    await addSong(music);
-    this.setState(({
-      Loadings: false,
-    }));
+    const bool = list.some((par) => par.trackId === music.trackId);
+    if (!bool) {
+      this.setState(({
+        Loadings: true,
+      }));
+      await addSong(music);
+      this.setState(({
+        Loadings: false,
+      }));
+    } else {
+      this.setState(({
+        Loadings: true,
+      }));
+      await removeSong(music);
+      this.setState(({
+        Loadings: false,
+      }));
+    }
   };
 
   render() {
