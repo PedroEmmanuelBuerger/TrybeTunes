@@ -98,7 +98,6 @@ class Content extends Component {
 
   saveFavoritesMusics = async (e, music) => {
     const { list } = this.state;
-    e.target.checked = true;
     const bool = list.some((par) => par.trackId === music.trackId);
     if (!bool) {
       this.setState(({
@@ -151,9 +150,18 @@ class Content extends Component {
               list={ list }
             />) }
           />
-          <Route path="/favorites" component={ Favorites } />
+          <Route
+            path="/favorites"
+            component={ Favorites }
+          />
           <Route path="/profile/edit" component={ ProfileEdit } />
-          <Route path="/profile" component={ Profile } />
+          <Route
+            path="/profile"
+            render={ (props) => (<Profile
+              { ...props }
+              Loadings={ Loadings }
+            />) }
+          />
           <Route
             exact
             path="/"

@@ -41,7 +41,7 @@ class Album extends Component {
             music={ element }
             key={ index }
             loadings={ Loadings }
-            lists={ list }
+            list={ list }
           />))}
       </div>
     );
