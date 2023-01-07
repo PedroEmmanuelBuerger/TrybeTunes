@@ -154,13 +154,13 @@ class Content extends Component {
             path="/favorites"
             component={ Favorites }
           />
-          <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route
+            path="/profile/edit"
+            component={ ProfileEdit }
+          />
           <Route
             path="/profile"
-            render={ (props) => (<Profile
-              { ...props }
-              Loadings={ Loadings }
-            />) }
+            component={ Profile }
           />
           <Route
             exact

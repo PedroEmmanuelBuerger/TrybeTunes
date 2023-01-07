@@ -48,7 +48,9 @@ class Profile extends Component {
             <p>{info.description}</p>
           </div>
           <div>
-            <Link to="/profile/edit">Editar perfil</Link>
+            <Link to="/profile/edit">
+              <h3>Editar perfil</h3>
+            </Link>
           </div>
         </section>
       </div>
