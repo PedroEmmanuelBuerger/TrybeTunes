@@ -198,7 +198,7 @@ class ProfileEdit extends Component {
           </div>
           <div>
             <button
-              type="submit"
+              type="button"
               data-testid="edit-button-save"
               name="saveButton"
               disabled={ bool }
@@ -206,7 +206,7 @@ class ProfileEdit extends Component {
                 this.buttonFunc(e);
               } }
             >
-              Salvar
+              Editar perfil
             </button>
           </div>
         </form>
